@@ -1,12 +1,15 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Camera))]
 public class FirstPersonCamera : MonoBehaviour
 {
+    Camera Camera;
+
+    [Tooltip("Toggle with Escape key.")]
     public bool cursorLocked;
 
     [Tooltip("When this is on, the camera will control its own horizontal rotation.")]
     public bool controlPitch = true;
-    [SerializeField] Transform playerTransform;
 
     [Header("Attributes")]
     public float sensitivity = 1.0f;
@@ -15,6 +18,14 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void Start()
     {
+        Initialize();
+    }
+
+    void Initialize()
+    {
+        Camera = GetComponent<Camera>();
+
+        Camera.nearClipPlane = 0.01f;
         cursorLocked = true;
     }
 
@@ -50,6 +61,6 @@ public class FirstPersonCamera : MonoBehaviour
             xRot += sensitivity * Input.GetAxis("Mouse X");
         }
 
-        transform.rotation = Quaternion.Euler(yRot, playerTransform != null ? playerTransform.eulerAngles.y : xRot, transform.eulerAngles.z);
+        transform.rotation = Quaternion.Euler(yRot, xRot, transform.eulerAngles.z);
     }
 }
