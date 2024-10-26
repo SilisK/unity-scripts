@@ -18,6 +18,7 @@ public class Typewriter : MonoBehaviour
     public List<Dialogue> dialogue;
     int activeDialogue = 0;
     public bool IsPlaying { get; private set; } = false;
+    [SerializeField] bool automaticTransitions = true;
     [SerializeField]
     [Range(0.01f, 0.05f)]
     float typingInterval = 0.05f;
@@ -88,8 +89,19 @@ public class Typewriter : MonoBehaviour
             characterIndex++;
             yield return new WaitForSeconds(typingInterval);
         }
-        typewriterCoroutine = null;
-        IsPlaying = false;
+
+        if (automaticTransitions)
+        {
+            yield return new WaitForSeconds(2.5f);
+            typewriterCoroutine = null;
+            IsPlaying = false;
+            SetNextDialogue();
+        }
+        else
+        {
+            typewriterCoroutine = null;
+            IsPlaying = false;
+        }
     }
 
     // Start the dialogue
