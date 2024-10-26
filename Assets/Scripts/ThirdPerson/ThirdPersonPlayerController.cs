@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,17 +9,31 @@ public class ThirdPersonPlayerController : MonoBehaviour
     [SerializeField]
     Transform CameraTransform;
 
-    [SerializeField] 
-    float movementSpeed = 5f;
+    [SerializeField]
+    GameObject freeLookGameObject;
 
-    private void Start()
+    public float movementSpeed = 1.25f;
+
+    public int state = 0;
+
+    private IEnumerator Start()
     {
         InitializeRigidbody();
+
+        yield return new WaitForSeconds(1f);
+
+        freeLookGameObject.SetActive(true);
     }
 
     float rotatationY;
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            if(state != 1) state = 1;
+            else state = 0;
+        }
+
         if (INPUT_Z_ONLY())
         {
             rotatationY = Mathf.LerpAngle(rotatationY, CameraTransform.eulerAngles.y, 0.1f);
@@ -55,15 +70,22 @@ public class ThirdPersonPlayerController : MonoBehaviour
 
     Vector3 MovementPosition()
     {
+        Vector3 input = MovementInput();
+        float speed = movementSpeed * Time.fixedDeltaTime;
         if (INPUT_Z_ONLY() || INPUT_Z_AND_X())
         {
-            Vector3 direction = (transform.forward * MovementInput().z);
-            return Rigidbody.position + direction * movementSpeed * Time.fixedDeltaTime;
+            Vector3 direction = transform.forward * input.z;
+            return Rigidbody.position + direction * speed;
+        }
+        else if (INPUT_Z_AND_X())
+        {
+            Vector3 direction = transform.forward * input.z + transform.right * input.x;
+            return Rigidbody.position + direction * speed;
         }
         else if (INPUT_X_ONLY())
         {
-            Vector3 direction = (transform.forward * Mathf.Abs(MovementInput().x));
-            return Rigidbody.position + direction * movementSpeed * Time.fixedDeltaTime;
+            Vector3 direction = transform.forward * Mathf.Abs(input.x);
+            return Rigidbody.position + direction * speed;
         }
         return Rigidbody.position;
     }
