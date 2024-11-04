@@ -7,9 +7,12 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] 
     CinemachineFreeLook FreeLook;
 
-    [SerializeField] 
-    [Range(0, 10)] 
-    float Sensitivity = 2.5f;
+    [SerializeField]
+    [Range(0, 2.5f)]
+    float HorizontalSensitivity = 0.38f;
+    [SerializeField]
+    [Range(0, 2.5f)]
+    float VerticalSensitivity = 0.38f;
 
     [SerializeField]
     bool lockCursorOnStart = true;
@@ -22,12 +25,6 @@ public class ThirdPersonCameraController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
-        {
-            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ?
-                CursorLockMode.None : CursorLockMode.Locked;
-        }
-
         ControlFreeLook();
     }
 
@@ -84,7 +81,7 @@ public class ThirdPersonCameraController : MonoBehaviour
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
 
-        FreeLook.m_XAxis.Value += Input.GetAxis("Mouse X") * Sensitivity;
-        FreeLook.m_YAxis.Value -= Input.GetAxis("Mouse Y") * Sensitivity / 250f;
+        FreeLook.m_XAxis.Value += Input.GetAxis("Mouse X") * HorizontalSensitivity;
+        FreeLook.m_YAxis.Value -= Input.GetAxis("Mouse Y") * VerticalSensitivity / 250f;
     }
 }
