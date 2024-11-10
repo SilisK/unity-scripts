@@ -95,19 +95,16 @@ public class ThirdPersonPlayerController : MonoBehaviour
         if (INPUT_Z_ONLY() || INPUT_Z_AND_X())
         {
             Vector3 direction = transform.forward * input.z;
-            Debug.Log(direction);
             return Rigidbody.position + direction * speed;
         }
         else if (INPUT_Z_AND_X())
         {
             Vector3 direction = transform.forward * input.z + transform.right * input.x;
-            Debug.Log(direction);
             return Rigidbody.position + direction * speed;
         }
         else if (INPUT_X_ONLY())
         {
             Vector3 direction = transform.forward * Mathf.Abs(input.x);
-            Debug.Log(direction);
             return Rigidbody.position + direction * speed;
         }
         return Rigidbody.position;
