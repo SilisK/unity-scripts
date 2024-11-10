@@ -28,6 +28,11 @@ public class ThirdPersonCameraController : MonoBehaviour
         ControlFreeLook();
     }
 
+    /* To fix the camera clipping through the wall, its important to understand that the camera is orbiting around a large radius.
+     * We need to project a sphere cast that can detect obstructions and shrink the radius when colliding.
+     * We can return the radius back to default when the obstruction is no longer colliding with our check sphere.
+     */
+
     float[] FreeLook_Heights = { 2.5f, 0.8f, -2.5f };
     float[] FreeLook_Radii = { 0.8f, 2.5f, 1.3f };
     IEnumerator InitializeFreeLook()
