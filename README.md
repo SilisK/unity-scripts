@@ -11,7 +11,7 @@
    Scripts for **first-person perspective** controls and mechanics.
    - **Player movement** and **camera controls**.
    - **Mouse look** and **head bobbing** effects.
-   - **Aiming** and **shooting** controls (if applicable).
+   - **Aiming** and **shooting** controls.
    - Example: First-person movement controller, mouse look, interaction system.
 ---
 <a href=GameElements>GameElements</a>
@@ -34,7 +34,7 @@
 ---
    Scripts for **third-person perspective** controls and mechanics.
    - **Third-person camera system** and **player movement**.
-   - **Jumping**, **climbing**, and **combat mechanics** (if applicable).
+   - **Jumping**, **climbing**, and **combat mechanics**.
    - Example: Third-person camera, player movement, combat system.
 
 ---
